@@ -1,5 +1,6 @@
 const Boom = require('boom')
 const config = require('./index')
+const logger =require('../app/lib/report')
 
 const swaggerDocumentation = {
     info: {
@@ -31,37 +32,59 @@ const manifest ={
             }
           }
         },
-        state:{
+        state:('TS015c3a15', {
           strictHeader: true,
           ignoreErrors: false,
           isSecure: true,
           isHttpOnly: true,
           isSameSite: 'Strict',
-          encoding: 'none',
-        }
+          encoding: 'none'
+        })
       },
       register:{
         plugins:[
-            // { plugin: 'laabr'},
-            { 
-                plugin: 'hapi-pino',
-                options: {
-                prettyPrint: process.env.NODE_ENV !== 'production',
-                level: process.env.DISABLE_LOG === '1' ? 'silent' : process.env.NODE_ENV === 'production' ? 'info' : 'debug'
-                }
+            { plugin: 'laabr'},
+            { plugin: require('../app/models')},
+            {
+              plugin: 'hapi-pino',
+              options: process.env.NODE_ENV !== 'production',
+              logEvents: false,
+              redact: [
+                  'req.headers', 
+                  'options.formData.document', 'formData.document',
+                  'options.body.requests', 'body.requests'
+              ]
             },
-            { plugin: 'hapijs-status-monitor' },
             { plugin: 'blipp' },
             { plugin: 'inert' },
             { plugin: 'vision' },
             { plugin: 'hapi-swagger', options: swaggerDocumentation },
-            
+            { plugin:'hapijs-status-monitor', 
+              options: {
+                title: 'Monitoring Status',
+                path: '/status',
+                websocket: null, // The Socket.io instance to be used, if none provided a new one will be created!
+                spans: [{
+                  interval: 1,     // Every second
+                  retention: 60    // Keep 60 datapoints in memory
+                }, {
+                  interval: 5,     // Every 5 seconds
+                  retention: 60
+                }, {
+                  interval: 15,    // Every 15 seconds
+                  retention: 60
+                }],
+                
+            }
+          
+            },
             /**
              * 
              * 
              * 
              */
-            
+            {plugin: './services/roles-svc'},
+
             {
               plugin: './routes',
               options: {
@@ -82,66 +105,14 @@ if (process.env.NODE_ENV !== 'test') {
           interval: 1000
         },
         reporters: {
-              myConsoleReporter: [{
-                module: 'good-squeeze',
-                name: 'Squeeze',
-                args: [
-                  { log: '*', 
-                    response: '*', 
-                    request: '*' 
-                  }]
-                }, 
-                { 
-                  module: 'good-console'
-                }, 'stdout']
-          //   myConsoleReporter: 
-          //   [
-          //       {
-          //           module: 'good-squeeze',
-          //           name: 'Squeeze',
-          //           args: [{ log: '*', response: '*' }]
-          //       }, 
-          //       {
-          //           module: 'good-console'
-          //       }, 'stdout'
-          //   ],
-          //   myFileReporter: 
-          //   [
-          //       {
-          //           module: 'good-squeeze',
-          //           name: 'Squeeze',
-          //           args: [{ error: '*', response: '*',log : '*',  request: '*' }]
-          //       }, 
-          //       {
-          //           module: 'good-squeeze',
-          //           name: 'SafeJson'
-          //       }, 
-          //       {
-          //           module: 'good-file',
-          //           args: ['./logs/log']
-          //       }
-          //   ],
-          //   myHTTPReporter: 
-          //   [
-          //       {
-          //           module: 'good-squeeze',
-          //           name: 'Squeeze',
-          //           args: [
-          //                   { error: '*' }
-          //           ]
-          //       }, 
-          //       {
-          //           module: 'good-http',
-          //           args: ['http://localhost:8000/logs', 
-          //               {
-          //                   wreck: {
-          //                       headers: { 'x-api-key': 12345 }
-          //                   }
-          //               }
-          //           ]
-          //       }
-          //   ]
-          // 
+          myConsoleReporter: [{
+              module: 'good-squeeze',
+              name: 'Squeeze',
+              args: [{ }]
+              }, 
+            {
+              module: 'good-console'
+            }, 'stdout']
         }
       }
     })
