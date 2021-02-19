@@ -1,7 +1,7 @@
 const Boom = require('boom')
 const config = require('./index')
 const logger =require('../app/lib/report')
-
+const {Sequelize} =require('sequelize')
 const swaggerDocumentation = {
     info: {
       title: 'Complain',
@@ -45,16 +45,6 @@ const manifest ={
         plugins:[
             { plugin: 'laabr'},
             { plugin: require('../app/models')},
-            {
-              plugin: 'hapi-pino',
-              options: process.env.NODE_ENV !== 'production',
-              logEvents: false,
-              redact: [
-                  'req.headers', 
-                  'options.formData.document', 'formData.document',
-                  'options.body.requests', 'body.requests'
-              ]
-            },
             { plugin: 'blipp' },
             { plugin: 'inert' },
             { plugin: 'vision' },
@@ -83,7 +73,25 @@ const manifest ={
              * 
              * 
              */
-            {plugin: './services/roles-svc'},
+            // { plugin: 'hapi-sequelizejs', 
+            //   options:[
+            //     {
+            //       name:'asu'
+            //     }
+            //   ]
+            //   // options: [
+            //   //   {
+            //   //       name: 'dbname', // identifier
+            //   //       models: [__dirname + '/server/models/**/*.js'], // paths/globs to model files
+            //   //       ignoredModels: [__dirname + '/server/models/**/*.js'], // OPTIONAL: paths/globs to ignore files
+            //   //       sequelize: new Sequelize(config.DB), // sequelize instance
+            //   //       sync: true, // sync models - default false
+            //   //       forceSync: false, // force sync (drops tables) - default false
+            //   //   },
+            //   // ],
+  
+            // },
+            { plugin: './services/roles-svc'},
 
             {
               plugin: './routes',

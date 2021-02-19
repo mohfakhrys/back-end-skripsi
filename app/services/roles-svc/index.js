@@ -6,7 +6,7 @@ exports.plugin = {
   
     register: (server, options) => {
       const services = [].concat(
-        require('./roles'),
+        require('./roles')
       )
       server.method(services)
     }

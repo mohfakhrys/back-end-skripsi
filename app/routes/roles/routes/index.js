@@ -1,7 +1,6 @@
-const getRoles = require('./get-roles')
-
 function routes (server) {
-  server.route(getRoles)
+  server.route(require('./get-roles'))
+  server.route(require('./create-role'))
   return server
 }
 

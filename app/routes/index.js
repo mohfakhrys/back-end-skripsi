@@ -1,7 +1,7 @@
 'use strict';
 
 const config = require('../../config');
-const validation = require('../services/validation');
+const validation = require('../lib/validation');
 
 const api = {}
 function withBasicError(code, msg, data) {

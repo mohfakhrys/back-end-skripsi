@@ -1,26 +1,18 @@
-const { TABLES } = require('../constants');
-const uuid = require('uuid/v4');
-const users = (sequelize, Sequelize) => {
-	const userData = sequelize.define(TABLES.USERS, {
+const { TABLES } = require('../../constants');
+const { v4: uuidv4 } = require('uuid');
+const roles = (sequelize, Sequelize) => {
+	const Roles = sequelize.define(TABLES.ROLES, {
 		id: {
 			allowNull: false,
 			primaryKey: true,
-			type: Sequelize.UUID,
-			defaultValue: uuid()
-		},
-		username: {
 			type: Sequelize.STRING,
-			field: 'username',
-			get() {
-				const value = this.getDataValue('username');
-				return (value === null) ? undefined : value;
-			}
+			defaultValue: uuidv4()
 		},
-		password: {
+		name: {
 			type: Sequelize.STRING,
-			field: 'password',
+			field: 'name',
 			get() {
-				const value = this.getDataValue('password');
+				const value = this.getDataValue('name');
 				return (value === null) ? undefined : value;
 			}
 		},
@@ -51,12 +43,13 @@ const users = (sequelize, Sequelize) => {
 	}, {
 		defaultScope: {
 			attributes: {
-				exclude: ['id']
+				//exclude: ['id']
 			}
 		}
 	});
-
-	return userData;
+	// console.log(Roles);
+	Roles.sync()
+	return Roles;
 };
 
-module.exports = users;
+module.exports = roles

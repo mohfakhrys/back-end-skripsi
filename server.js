@@ -27,7 +27,7 @@ const startServer = async function () {
 
 if (config.tlsOptions.key) {
   console.log(config.tlsOptions.key)
-  console.log(config.docsPath);
+  // console.log(config.docsPath);
   startServer()
 } else {
   throw 'Missing pub key for services to validate user!'
