@@ -1,6 +1,8 @@
 'use strict';
 
-const {  EntitySchema} =require('typeorm')
+const {  EntitySchema } =require('typeorm')
+const { NextVal, EntityWithSequence } =require('typeorm-sequence')
+
 const Roles = require('../models/roles').Roles
 
 const roleSchema = new EntitySchema({
@@ -10,8 +12,7 @@ const roleSchema = new EntitySchema({
   columns: {
     id: {
       primary: true,
-      type: 'uuid',
-      generated: 'uuid',
+      type: 'varchar',
       nullable: false,
     },
     roleName: {
@@ -27,13 +28,13 @@ const roleSchema = new EntitySchema({
     },
     updateAt: {
       name: 'update_at',
-      type: 'date',
+      type: 'timestamp',
       nullable: false,
       default: () => 'CURRENT_TIMESTAMP',
     },
     deleteAt: {
       name: 'delete_at',
-      type: 'date',
+      type: 'timestamp',
       nullable: false,
       default: () => 'CURRENT_TIMESTAMP',
     },

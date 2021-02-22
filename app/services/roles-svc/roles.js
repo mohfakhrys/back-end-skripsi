@@ -1,12 +1,9 @@
 const Boom = require('boom');
 const {logger} =require('../../lib/report');
-const postgresPool = require('../../lib/database/postgrest').pool;
 const Roles = require('../../database/models/roles').Roles
 const { getRepository } = require('typeorm');
-// const roleRepository = getRepository(Roles)
 
 const TAG = 'server.services.roles'
-// const roleRepository = getRepository(Roles)
 
 async function getAllRoleExist() {
     logger.info(TAG, 'getAllRoleExist begin')
@@ -20,7 +17,10 @@ async function createNewRole(roleName) {
     if(roleNameExist){
         throw Boom.badData(roleName+ ' alredy exist')
     }
+
+    // console.log(roleId);
     return await getRepository(Roles).save({
+        // id:roleId,
         roleName:roleName
     })
 

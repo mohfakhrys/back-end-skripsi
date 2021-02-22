@@ -63,7 +63,8 @@ api.plugin ={
         // register all routing service
         await[ 
             server.register(require('./about-us')),
-            server.register(require('./roles'))
+            server.register(require('./roles')),
+            server.register(require('./users'))
         ]
 
         server.ext('onPreResponse', preResponse)
