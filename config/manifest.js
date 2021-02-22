@@ -92,6 +92,7 @@ const manifest ={
   
             // },
             { plugin: './services/roles-svc'},
+            { plugin: './services/users-svc'},
 
             {
               plugin: './routes',
