@@ -11,14 +11,25 @@ const TAG = 'server.services.roles'
 async function getAllRoleExist() {
     logger.info(TAG, 'getAllRoleExist begin')
     const result = await getRepository(Roles).find()
-    console.log(result);
     return result
 }
 
 async function createNewRole(roleName) {
-    logger.info(TAG, 'getAllRoleExist begin')
-    
-    const create = await getRepository(Roles).save()
+    logger.info(TAG, 'getAllRoleExist begin', roleName)
+    const roleNameExist = await getRoleName(roleName)
+    if(roleNameExist){
+        throw Boom.badData(roleName+ ' alredy exist')
+    }
+    return await getRepository(Roles).save({
+        roleName:roleName
+    })
+
+}
+
+async function getRoleName(roleName) {
+    logger.info(TAG, 'getRoleName begin', roleName)
+    const name = await getRepository(Roles).findOne({roleName:roleName})
+    return name
 }
 
 async function getRoleDetails(idRole) {
@@ -40,7 +51,11 @@ module.exports=[
         method: createNewRole
     },
     {
-        name:'service.auth.roleDetail',
+        name:'service.auth.getRoleDetails',
         method: getRoleDetails
+    },
+    {
+        name:'service.auth.getRoleName',
+        method: getRoleName
     }
 ]

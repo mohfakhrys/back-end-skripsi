@@ -11,6 +11,7 @@ database.plugin = {
 	pkg: require('./package.json'),
 	multiple: false,
 	register: async(server, options)=>{
+		console.log(entity);
 		const connection = await createConnection({
 			type: process.env.DB_DRIVER,
 			host: process.env.DB_HOST,
@@ -31,4 +32,4 @@ database.plugin = {
 	
 }
 
-module.exports=database
+module.exports= database

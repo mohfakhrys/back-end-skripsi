@@ -1,3 +1,5 @@
+'use strict';
+
 const {  EntitySchema} =require('typeorm')
 const Roles = require('../models/roles').Roles
 
@@ -10,10 +12,12 @@ const roleSchema = new EntitySchema({
       primary: true,
       type: 'uuid',
       generated: 'uuid',
+      nullable: false,
     },
     roleName: {
       type: 'varchar',
       nullable: false,
+      length: 100,
     },
     createdAt: {
       name: 'created_at',

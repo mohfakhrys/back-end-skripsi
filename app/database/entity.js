@@ -1,7 +1,8 @@
-const {getRepository } = require('typeorm')
 
+const userSchema = require('./entity/users')
 const roleSchema = require('./entity/roles')
 
 module.exports = {
-  roleSchema
+  userSchema,
+  roleSchema,
 }
