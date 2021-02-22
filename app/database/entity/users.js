@@ -2,6 +2,7 @@
 
 const { EntitySchema } =require ('typeorm');
 const Users = require('../models/users').Users ;
+// const Roles = require('../models/roles').Roles
 
 const userSchema = new EntitySchema({
     name: 'users',
@@ -15,15 +16,18 @@ const userSchema = new EntitySchema({
             nullable: false,
             primary: true,
         },
-        fistName: {
+        userName:{
             type: 'varchar',
             length: 100,
             nullable: false,
         },
+        firstName: {
+            type: 'varchar',
+            length: 100,
+        },
         lastName: {
             type: 'varchar',
             length: 100,
-            nullable: false,
         },
         email: {
             type: 'varchar',
@@ -35,40 +39,39 @@ const userSchema = new EntitySchema({
             length: 100,
             nullable: false
         },
+        userRole: {
+            type: 'varchar',
+            length: 100,
+            nullable: false
+        },
         createdAt: {
             name: 'created_at',
-            type: 'date',
+            type: 'timestamp',
             nullable: false,
             default: () => 'CURRENT_TIMESTAMP',
           },
         updateAt: {
             name: 'update_at',
-            type: 'date',
+            type: 'timestamp',
             nullable: false,
             default: () => 'CURRENT_TIMESTAMP',
           },
         deleteAt: {
             name: 'delete_at',
-            type: 'date',
+            type: 'timestamp',
             nullable: false,
             default: () => 'CURRENT_TIMESTAMP',
           },
     },
     // relations:{
-    //     sender: {
-    //         target: 'Customer',
+    //     role: {
+    //         target: "user_role",
     //         type: 'many-to-one',
     //         joinTable: true,
     //         inverseSide: 'sender',
-    //         eager: true
+    //         eager: true,
+    //         cascade: true
     //     },
-    //     receiver: {
-    //         target: 'Customer',
-    //         type: 'many-to-one',
-    //         joinTable: true,
-    //         inverseSide: 'receiver',
-    //         eager: true
-    //     }
     // }
 });
 

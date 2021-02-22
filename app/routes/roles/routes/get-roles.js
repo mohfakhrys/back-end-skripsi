@@ -3,7 +3,7 @@ const handler = require('../handler/get-roles')
 
 const route = {
   method: 'GET',
-  path: '/users/roles',
+  path: '/auth/roles',
   options: {
     tags: ['api', 'roles'],
     description: 'Get Roles Category',

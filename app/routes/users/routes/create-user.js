@@ -1,16 +1,21 @@
 const Joi = require('joi')
-const handler = require('../handler/create-role')
+const handler = require('../handler/create-user')
 
 const route = {
   method: 'POST',
-  path: '/auth/role',
+  path: '/users/user',
   options: {
-    tags: ['api', 'roles', 'create'],
-    description: 'Create Roles Category',
-    notes: 'Create Roles Category',
+    tags: ['api', 'user'],
+    description: 'Create User',
+    notes: 'User Registration API',
     validate: {
         payload: {
-          role_name: Joi.string().min(5).max(45).alphanum().required(),
+            userName: Joi.string().min(5).max(45).alphanum().required(),
+            firstName: Joi.string().min(5).max(45).alphanum().required(),
+            lastName: Joi.string().min(5).max(45).alphanum().required(),
+            email: Joi.string().min(5).max(45).email().required(),
+            password: Joi.string().min(5).max(45).alphanum().required(),
+            userRoles:Joi.string().required()
         }
       },
     // validate:{},
