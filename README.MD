@@ -1,7 +1,9 @@
-# apa lo
-bikin dulu env sesuai selera dan default 
-
-```TZ=Asia/Jakarta
+# ceria complane handling
+## how to start
+- copy env file  ``` cp .env .env.example``` from .env.example
+  
+```env
+TZ=Asia/Jakarta
 SERVICE_HOST= localhost
 SERVICE_PORT=bebas || 8080
 NODE_ENV=development
@@ -22,5 +24,20 @@ DB_SYNC=true
 DISABLE_LOG=1
 FILE_SIZE_LIMIT=10
 FILE_UPLOAD_COUNT=10
-FILE_UPLOAD_PATH=upload/users```
+FILE_UPLOAD_PATH=upload/users
+```
+
+
+## installation 
+- install node module ```npm install``` or using yarn ```yarn install```
+- setting database 
+    - database host
+    - database name
+    - password database 
+    - port database
+    - schema database
+- documentation swagger
+    http://localhost:8080/documentation
+- monitoring server process 
+    http://localhost:8080/status
 
