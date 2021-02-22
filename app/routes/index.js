@@ -1,8 +1,19 @@
 'use strict';
 
-const config = require('../../config')
+const config = require('../../config');
+const validation = require('../lib/validation');
 
 const api = {}
+function withBasicError(code, msg, data) {
+  return {
+    error: {
+      code,
+      msg,
+      data,
+      recorded_at: new Date().toISOString()
+    }
+  }
+}
 
 api.plugin ={
     pkg: require('./package.json'),
@@ -11,13 +22,12 @@ api.plugin ={
     register: async(server, options)=>{
         const preResponse = (request, h) => {
             let response = request.response
-            // console.log({response});
             if (response.isBoom) {
                 let statusCode = response.data && response.data.statusCode ? response.data.statusCode : response.output.statusCode
                 const code = response.data && response.data.code ? response.data.code : response.output.statusCode
                 const msg = response.data && response.data.msg ? response.data.msg : response.message
                 const data = response.data && response.data.data ? response.data.data : undefined
-                const err = request.server.methods.services.errors.basic(code, msg, data)
+                const err = withBasicError(code, msg, data)
                 // Fix for F5
                 if (response.output.statusCode === 500 || response.output.statusCode === 503 || response.output.statusCode === 504) {
                   statusCode = 400
@@ -25,7 +35,7 @@ api.plugin ={
         
                 return h.response(err).code(statusCode)
               }
-
+              
               if(request.path != "/documentation" && request.path!="/status"){
                 response.header("X-XSS-Protection", "1; mode=block");
                 response.header("X-Frame-Options", "SAMEORIGIN");
@@ -52,7 +62,8 @@ api.plugin ={
 
         // register all routing service
         await[ 
-            server.register(require('./about-us'))
+            server.register(require('./about-us')),
+            server.register(require('./roles'))
         ]
 
         server.ext('onPreResponse', preResponse)
@@ -71,30 +82,4 @@ api.plugin ={
         }
 }
 
-const validation = async (decoded, request) => {
-  //orm get
-  try {
-    // do your checks to see if the person is valid
-    let userId = decoded.userId;
-    // Set user id in every request header.
-    request.headers.userId = userId;
-    //search 
-    let user = await User.findOne({});
-    if (user) {
-      return {
-        isValid: true
-      };
-    } else {
-      console.log('Invalid Credential');
-      return {
-        isValid: false
-      };
-    }
-  } catch (error) {
-    return {
-      isValid: false
-    };
-  }
-
-}
 module.exports = api
