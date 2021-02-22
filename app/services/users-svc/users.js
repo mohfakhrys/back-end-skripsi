@@ -39,7 +39,6 @@ async function createUser(userName, firstName, lastName, email, password ) {
     let passrodEncript = await beforeCreate(password)
     console.log(passrodEncript);
     const data = {userName, firstName, lastName, email, password:passrodEncript}
-    console.log(data);
     return await getRepository(Users).save(data)
 }
 
