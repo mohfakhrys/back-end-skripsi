@@ -6,7 +6,7 @@ const route = {
   path: '/users/roles',
   options: {
     tags: ['api', 'roles'],
-    description: 'Roles Category',
+    description: 'Get Roles Category',
     notes: 'Roles Category',
     // validate:{},
     // validate: {

@@ -1,7 +1,7 @@
 const Boom = require('boom')
 const config = require('./index')
 const logger =require('../app/lib/report')
-const {Sequelize} =require('sequelize')
+
 const swaggerDocumentation = {
     info: {
       title: 'Complain',
@@ -44,7 +44,7 @@ const manifest ={
       register:{
         plugins:[
             { plugin: 'laabr'},
-            { plugin: require('../app/models')},
+            { plugin: require('../app/database')},
             { plugin: 'blipp' },
             { plugin: 'inert' },
             { plugin: 'vision' },

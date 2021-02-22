@@ -1,48 +1,24 @@
-const Boom = require('boom')
-const {logger} =require('../../lib/report')
-//const Role = require('../../models/roles')
-const uuidv4 = require('uuid')
-const postgresPool = require('../../lib/database/postgrest').pool
+const Boom = require('boom');
+const {logger} =require('../../lib/report');
+const postgresPool = require('../../lib/database/postgrest').pool;
+const Roles = require('../../database/models/roles').Roles
+const { getRepository } = require('typeorm');
+// const roleRepository = getRepository(Roles)
+
 const TAG = 'server.services.roles'
-
-
-async function createNewRole(roleName) {
-    logger.info(TAG, 'createNewRole begin')
-        const dateNow = new Date().getTime()
-        //new Date().toISOString()
-        console.log('asuuuuuuu',dateNow, roleName);
-        logger.debug(TAG,dateNow);
-        console.log(postgresPool);
-        const sql = await postgresPool.query(
-            `INSERT INTO ilham.kuntul.auth_roles (id, name, create_date, update_date,delete_date) VALUES (${uuidv4}, ${roleName})`
-            )
-        console.log('asuuuuuuu1',sql);
-        // logger.debug(sql)
-        logger.debug(TAG, sql, 'createNewRole')
-        return sql
-    
-}
+// const roleRepository = getRepository(Roles)
 
 async function getAllRoleExist() {
     logger.info(TAG, 'getAllRoleExist begin')
-    try {
-        const result = await postgresPool.query(
-            `select * from ilham.kuntul.auth_roles ar`
-        )
-        // console.log(result)
-        logger.debug(TAG, "getAllRoleExist", result )
-        const row = result.rows        
-        return row
+    const result = await getRepository(Roles).find()
+    console.log(result);
+    return result
+}
 
-    } catch (error) {
-        const { statusCode } = error
-        logger.error(TAG, statusCode)
-        if (statusCode && statusCode === 401) { 
-            throw Boom.unauthorized('Cant get roles') 
-        }
-        logger.error(TAG, 'Get Role error catch', { error })
-            throw Boom.gatewayTimeout()
-    }
+async function createNewRole(roleName) {
+    logger.info(TAG, 'getAllRoleExist begin')
+    
+    const create = await getRepository(Roles).save()
 }
 
 async function getRoleDetails(idRole) {
