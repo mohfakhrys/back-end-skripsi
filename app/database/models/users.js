@@ -1,5 +1,5 @@
 class Users{
-    constructor(id, userName, firstName, lastName, email, password, createdAt, updateAt, deleteAt, user_role){
+    constructor(id, userName, firstName, lastName, email, password, createdAt, updateAt, deleteAt, userRoles){
         this.id = id,
         this.userName=userName,
         this.firstName=firstName,
@@ -9,7 +9,7 @@ class Users{
         this.createdAt = createdAt,
         this.updateAt=updateAt,
         this.deleteAt=deleteAt,
-        this.user_role=user_role
+        this.userRoles=userRoles
     }
 }
 

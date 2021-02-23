@@ -11,8 +11,8 @@ async function getAllRoleExist() {
     return result
 }
 
-async function createNewRole(roleName) {
-    logger.info(TAG, 'getAllRoleExist begin', roleName)
+async function createNewRole(id, roleName) {
+    logger.info(TAG, 'getAllRoleExist begin', {id, roleName})
     const roleNameExist = await getRoleName(roleName)
     if(roleNameExist){
         throw Boom.badData(roleName+ ' alredy exist')
@@ -20,7 +20,7 @@ async function createNewRole(roleName) {
 
     // console.log(roleId);
     return await getRepository(Roles).save({
-        // id:roleId,
+        id:id,
         roleName:roleName
     })
 

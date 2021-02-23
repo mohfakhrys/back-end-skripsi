@@ -39,7 +39,7 @@ const userSchema = new EntitySchema({
             length: 100,
             nullable: false
         },
-        userRole: {
+        userRoles: {
             type: 'varchar',
             length: 100,
             nullable: false
