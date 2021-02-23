@@ -10,6 +10,7 @@ const route = {
     notes: 'Create Roles Category',
     validate: {
         payload: {
+          id: Joi.number().max(45).required(),
           role_name: Joi.string().min(5).max(45).alphanum().required(),
         }
       },
@@ -22,7 +23,7 @@ const route = {
     // },
     plugins: {
       'hapi-swagger': {
-        payloadType: 'form',
+        // payloadType: 'form',
         responses: {
           '200': {
             description: 'Success'
