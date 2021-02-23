@@ -1,4 +1,7 @@
 # ceria complane handling
+
+[![CodeQL](https://github.com/mohfakhrys/back-end-skripsi/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/mohfakhrys/back-end-skripsi/actions/workflows/codeql-analysis.yml)
+
 ## how to start
 - copy env file  ``` cp .env .env.example``` from .env.example
   
