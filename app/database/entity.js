@@ -1,3 +1,4 @@
+'use strict';
 
 const userSchema = require('./entity/users')
 const roleSchema = require('./entity/roles')

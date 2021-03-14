@@ -22,7 +22,7 @@ database.plugin = {
 			synchronize: (process.env.DB_SYNC === 'true'),
 			logging: (process.env.DB_LOGGING === 'true'),
 			entities: Object.values(entity),
-			logging: true
+			// logging: true
 		})
 		if(process.env.NODE_ENV === 'production'){
 			console.log('production');

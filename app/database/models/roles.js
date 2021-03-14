@@ -1,3 +1,4 @@
+'use strict';
 class Roles{
     constructor(id, roleName, createdAt, updateAt, deleteAt){
         this.id = id,

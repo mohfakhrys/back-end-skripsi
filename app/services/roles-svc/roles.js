@@ -1,3 +1,5 @@
+'use strict';
+
 const Boom = require('boom');
 const {logger} =require('../../lib/report');
 const Roles = require('../../database/models/roles').Roles
@@ -8,6 +10,7 @@ const TAG = 'server.services.roles'
 async function getAllRoleExist() {
     logger.info(TAG, 'getAllRoleExist begin')
     const result = await getRepository(Roles).find()
+    logger.debug(result)
     return result
 }
 
@@ -17,12 +20,18 @@ async function createNewRole(id, roleName) {
     if(roleNameExist){
         throw Boom.badData(roleName+ ' alredy exist')
     }
-
-    // console.log(roleId);
     return await getRepository(Roles).save({
         id:id,
         roleName:roleName
     })
+
+}
+
+async function updateExistingRole(id, roleName) {
+    logger.info(TAG, 'getAllRoleExist begin', {id, roleName})
+    const idRol = await getRepository(Roles).findByIds()
+    console.log(idRol);
+        
 
 }
 
@@ -57,5 +66,9 @@ module.exports=[
     {
         name:'service.auth.getRoleName',
         method: getRoleName
+    },
+    {
+        name: 'service.auth.changeNameRole',
+        method: updateExistingRole
     }
 ]

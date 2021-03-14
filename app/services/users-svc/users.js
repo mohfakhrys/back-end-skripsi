@@ -1,7 +1,8 @@
+'use strict';
+
 const Boom = require('boom');
 const {logger} =require('../../lib/report');
 const Users = require('../../database/models/users').Users
-const postgresPool = require('../../lib/database/postgrest').pool;
 const { getRepository } = require('typeorm');
 
 const bcrypt =require('bcrypt')

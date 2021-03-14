@@ -1,3 +1,5 @@
+'use strict';
+
 const Pack = require('../package')
 const Fs = require('fs');
 const Path = require('path');
