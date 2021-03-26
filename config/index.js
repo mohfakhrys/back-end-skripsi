@@ -33,8 +33,8 @@ const config ={
 			},
 	},
     tlsOptions: {
-        key: Fs.readFileSync(Path.join(__dirname, 'ssl/key.pem'), 'utf8'),
-        cert: Fs.readFileSync(Path.join(__dirname, 'ssl/cert.pem'), 'utf8')
+        public: Fs.readFileSync(Path.join(__dirname, 'ssl/certificate.crt'), 'utf8'),
+        private: Fs.readFileSync(Path.join(__dirname, 'ssl/privateKey.key'), 'utf8')
     },
 }
 

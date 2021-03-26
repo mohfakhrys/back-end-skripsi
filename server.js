@@ -26,8 +26,8 @@ const startServer = async function () {
 }
 //startServer()
 
-if (config.tlsOptions.key) {
-  console.log(config.tlsOptions.key)
+if (config.tlsOptions.public) {
+  console.log(config.tlsOptions.public)
   // console.log(config.docsPath);
   startServer()
 } else {

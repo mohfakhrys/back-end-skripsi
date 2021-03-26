@@ -3,7 +3,7 @@ const handler = require('../handler/create-user')
 
 const route = {
   method: 'POST',
-  path: '/users/user',
+  path: '/users/register',
   options: {
     tags: ['api', 'user'],
     description: 'Create User',
