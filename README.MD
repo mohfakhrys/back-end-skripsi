@@ -1,9 +1,7 @@
 # ceria complane handling
 
 [![CodeQL](https://github.com/mohfakhrys/back-end-skripsi/actions/workflows/codeql-analysis.yml/badge.svg?branch=main)](https://github.com/mohfakhrys/back-end-skripsi/actions/workflows/codeql-analysis.yml)
-
 [![njsscan sarif](https://github.com/mohfakhrys/back-end-skripsi/actions/workflows/njsscan-analysis.yml/badge.svg)](https://github.com/mohfakhrys/back-end-skripsi/actions/workflows/njsscan-analysis.yml)
-
 [![Node.js CI](https://github.com/mohfakhrys/back-end-skripsi/actions/workflows/nodejs.yml/badge.svg)](https://github.com/mohfakhrys/back-end-skripsi/actions/workflows/nodejs.yml)
 ## how to start
 - copy env file  ``` cp .env .env.example``` from .env.example

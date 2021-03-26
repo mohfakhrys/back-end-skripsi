@@ -1,3 +1,4 @@
+'use strict';
 class Users{
     constructor(id, userName, firstName, lastName, email, password, createdAt, updateAt, deleteAt, userRoles){
         this.id = id,

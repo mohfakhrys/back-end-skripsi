@@ -1,9 +1,11 @@
+'use strict';
+
 const Boom = require('boom');
 const {logger} =require('../../lib/report');
 const Users = require('../../database/models/users').Users
-const postgresPool = require('../../lib/database/postgrest').pool;
 const { getRepository } = require('typeorm');
-
+const jwt = require('jsonwebtoken');
+const {tlsOptions} = require('../../../config')
 const bcrypt =require('bcrypt')
 
 const TAG = 'server.services.users'
@@ -18,6 +20,33 @@ async function beforeCreatePassword(password) {
 async function login(userName, password) {
     logger.info(TAG, 'login begin', {userName, password})
 
+    const existUserName = await findByUsername(userName)
+    if(!existUserName){
+        console.log('masuk kondisi gak ada uang', {existUserName});
+        throw Boom.badData('userName dosnt exist')
+    }
+
+    let asuPassword = await validPassword(password, existUserName.password)
+    if(!asuPassword){
+        console.log(existUserName.password);
+        // throw Boom.badData('password y gak bener', existUserName.password)
+    }
+    let asu = tlsOptions.private
+    let payload = existUserName.userName
+    const iat = Math.floor(Date.now() / 1000) - 30 
+    const exp = Math.floor(Date.now() / 1000) + (60 * 60)
+    console.log(iat, exp);
+
+    var toket = jwt.sign({ payload, iat: iat, exp:exp}, asu, { algorithm: 'HS256'});
+
+    console.log(toket);
+    return { credentials: toket, messaage:''}
+    //{asuPassword, existUserName}
+
+}
+
+async function validPassword(password, checkPassword) {
+    return await bcrypt.compareSync(password, checkPassword);
 }
 
 async function changePassword(userName, email, password, newPassword) {
@@ -34,7 +63,9 @@ async function changePassword(userName, email, password, newPassword) {
 
     const match = await bcrypt.compare(password, newPassword);
 }
-
+async function getRoleUsre(username) {
+    
+}
 async function findByUsername(userName) {
     logger.info(TAG, 'findByUsername begin', userName)
     const userExist = await getRepository(Users).findOne({userName:userName})
@@ -62,11 +93,6 @@ async function createUser(userName, firstName, lastName, email, password, userRo
     const data = {userName, firstName, lastName, email, password:passrodEncript, userRoles}
     return await getRepository(Users).save(data)
 }
-
-async function validPassword(password, checkPassword) {
-    return await bcrypt.compareSync(password, checkPassword);
-}
-
 
 async function getAllUsers({limit, offset, userName, firstName, lastName, email}) {
     logger.info(TAG, 'getAllUsers Begin')

@@ -1,3 +1,5 @@
+'use strict';
+
 const { Pool , types} = require('pg')
 const dbConfig = require('./config')
 var dayjs = require('dayjs')

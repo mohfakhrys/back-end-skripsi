@@ -1,3 +1,5 @@
+'use strict';
+
 const Boom = require('boom')
 const config = require('./index')
 const logger =require('../app/lib/report')
@@ -44,7 +46,6 @@ const manifest ={
       register:{
         plugins:[
             { plugin: 'laabr'},
-            { plugin: require('../app/database')},
             { plugin: 'blipp' },
             { plugin: 'inert' },
             { plugin: 'vision' },
@@ -65,32 +66,11 @@ const manifest ={
                   retention: 60
                 }],
                 
-            }
-          
+              }
+              
             },
-            /**
-             * 
-             * 
-             * 
-             */
-            // { plugin: 'hapi-sequelizejs', 
-            //   options:[
-            //     {
-            //       name:'asu'
-            //     }
-            //   ]
-            //   // options: [
-            //   //   {
-            //   //       name: 'dbname', // identifier
-            //   //       models: [__dirname + '/server/models/**/*.js'], // paths/globs to model files
-            //   //       ignoredModels: [__dirname + '/server/models/**/*.js'], // OPTIONAL: paths/globs to ignore files
-            //   //       sequelize: new Sequelize(config.DB), // sequelize instance
-            //   //       sync: true, // sync models - default false
-            //   //       forceSync: false, // force sync (drops tables) - default false
-            //   //   },
-            //   // ],
-  
-            // },
+
+            { plugin: require('../app/database')},
             { plugin: './services/roles-svc'},
             { plugin: './services/users-svc'},
 
@@ -115,13 +95,12 @@ if (process.env.NODE_ENV !== 'test') {
         },
         reporters: {
           myConsoleReporter: [{
-              module: 'good-squeeze',
-              name: 'Squeeze',
-              args: [{ }]
-              }, 
-            {
-              module: 'good-console'
-            }, 'stdout']
+            module: 'good-squeeze',
+            name: 'Squeeze',
+            args: [{ log: '*', response: '*', request: '*' }]
+          }, {
+            module: 'good-console'
+          }, 'stdout']
         }
       }
     })
