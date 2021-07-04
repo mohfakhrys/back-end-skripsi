@@ -29,7 +29,7 @@ async function login(userName, password) {
     let asuPassword = await validPassword(password, existUserName.password)
     if(!asuPassword){
         console.log(existUserName.password);
-        // throw Boom.badData('password y gak bener', existUserName.password)
+        throw Boom.unauthorized('password y gak bener', existUserName.password)
     }
     let asu = tlsOptions.private
     let payload = existUserName.userName
