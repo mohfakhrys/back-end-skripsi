@@ -25,27 +25,35 @@ async function login(userName, password) {
         console.log('masuk kondisi gak ada uang', {existUserName});
         throw Boom.badData('userName dosnt exist')
     }
-
-    let asuPassword = await validPassword(password, existUserName.password)
-    if(!asuPassword){
+    console.log(existUserName.userRoles)
+    // let emailExist = await findByEmail(userName)
+    // if(!emailExist){
+    //     throw Boom.badData(email+ ' dosnt exist')
+    // }
+    let passwordExisting = await validPassword(password, existUserName.password)
+    if(!passwordExisting){
         console.log(existUserName.password);
         throw Boom.unauthorized('password y gak bener', existUserName.password)
     }
     let asu = tlsOptions.private
-    let payload = existUserName.userName
+     
+    let username = existUserName.userName
+    let role = existUserName.userRoles
     const iat = Math.floor(Date.now() / 1000) - 30 
     const exp = Math.floor(Date.now() / 1000) + (60 * 60)
     console.log(iat, exp);
 
-    var toket = jwt.sign({ payload, iat: iat, exp:exp}, asu, { algorithm: 'HS256'});
+    var toket = jwt.sign({ role,username, iat: iat, exp:exp}, asu, { algorithm: 'HS256'});
 
     console.log(toket);
     return { credentials: toket, messaage:''}
-    //{asuPassword, existUserName}
+    //{passwordExisting, existUserName}
 
 }
 
 async function validPassword(password, checkPassword) {
+    logger.debug(TAG, '')
+    console.log('masuk sini', password, checkPassword)
     return await bcrypt.compareSync(password, checkPassword);
 }
 
