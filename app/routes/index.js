@@ -66,7 +66,8 @@ api.plugin = {
     await [
       server.register(require('./about-us')),
       server.register(require('./roles')),
-      server.register(require('./users'))
+      server.register(require('./users')),
+      server.register(require('./ticket'))
     ]
 
     server.ext('onPreResponse', preResponse)

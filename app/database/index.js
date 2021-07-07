@@ -2,6 +2,7 @@
 
 const {logger } = require('../lib/report')
 const { createConnection } = require('typeorm')
+const {SnakeNamingStrategy} = require('typeorm-naming-strategies')
 const entity = require('./entity')
 
 
@@ -22,7 +23,8 @@ database.plugin = {
 			synchronize: (process.env.DB_SYNC === 'true'),
 			logging: (process.env.DB_LOGGING === 'true'),
 			entities: Object.values(entity),
-			// logging: true
+			namingStrategy: new SnakeNamingStrategy(),
+			logging: true
 		})
 		if(process.env.NODE_ENV === 'production'){
 			console.log('production');
