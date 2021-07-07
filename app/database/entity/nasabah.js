@@ -2,22 +2,27 @@
 
 const {  EntitySchema } =require('typeorm')
 
-const Roles = require('../models/roles').Roles
+const Nasabah = require('../models/nasabah').Nasabah
 
-const roleSchema = new EntitySchema({
-  name: 'user_role',
-  tableName: 'user_role',
-  target:Roles,
+const nasabahSchema = new EntitySchema({
+  name: 'nasabah',
+  tableName: 'nasabah',
+  target:Nasabah,
   columns: {
     id: {
       primary: true,
       type: 'varchar',
       nullable: false,
     },
-    roleName: {
+    nasabahName: {
       type: 'varchar',
       nullable: false,
       length: 100,
+    },
+    nomerHp: {
+        type: 'varchar',
+        nullable: true,
+        length: 100,
     },
     createdAt: {
       name: 'created_at',
@@ -40,4 +45,4 @@ const roleSchema = new EntitySchema({
   },
 })
 
-module.exports= roleSchema
+module.exports= nasabahSchema

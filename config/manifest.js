@@ -67,13 +67,12 @@ const manifest ={
                 }],
                 
               }
-              
             },
 
             { plugin: require('../app/database')},
             { plugin: './services/roles-svc'},
             { plugin: './services/users-svc'},
-
+            { plugin: './services/ticket-svc'},
             {
               plugin: './routes',
               options: {

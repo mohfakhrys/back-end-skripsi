@@ -15,8 +15,7 @@ const startServer = async function () {
     const server = await Glue.compose(manifest, options);
     server.listener.keepAliveTimeout = 60000
     await server.start()
-
-    console.log('app lagi jalan cuk')
+    // console.log('app lagi jalan cuk')
     console.log(`${config.host}:${config.port}`)
   }
   catch (err) {

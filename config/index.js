@@ -11,6 +11,7 @@ const config ={
     port: process.env.SERVICE_PORT, 
     docsPath: '/documentation',
     version: Pack.version,
+	version:'1',
     DB: {
 		database: process.env.DB_NAME,
 		username: process.env.DB_USER,

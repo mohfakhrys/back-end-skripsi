@@ -1,49 +1,55 @@
 'use strict';
 
-const { EntitySchema } =require ('typeorm');
-const Users = require('../models/users').Users ;
-// const Roles = require('../models/roles').Roles
+const { EntitySchema, PrimaryGeneratedColumn } = require ('typeorm');
+const Ticket = require('../models/ticket').Ticket ;
 
-const userSchema = new EntitySchema({
-    name: 'users',
-    tableName: 'users',
-    target: Users,
+const ticketSchema = new EntitySchema({
+    name: 'ticket',
+    tableName: 'ticket',
+    target: Ticket,
     columns: {
-        id: {
-            type: 'varchar',
-            unique: true,
-            generated: 'uuid',
-            nullable: false,
+        idTicket:{
+            type: 'int',
+            generated: 'serial',
             primary: true,
-        },
-        userName:{
-            type: 'varchar',
-            length: 100,
+            unique: true,
             nullable: false,
         },
-        firstName: {
-            type: 'varchar',
-            length: 100,
-        },
-        lastName: {
-            type: 'varchar',
-            length: 100,
-        },
-        email: {
-            type: 'varchar',
-            length: 100,
+        complain:{
+            type: 'text',
             nullable: false,
-        },
-        password: {
-            type: 'varchar',
             // length: 100,
-            nullable: false
-        },
-        userRoles: {
+        }, 
+        sla:{
             type: 'varchar',
+            // nullable: true,
             length: 100,
-            nullable: false
+        }, 
+        statusTicket:{
+            type: 'varchar',
+            // nullable: false,
+            length: 100,
+        }, 
+        kategoryTicket:{
+            type: 'varchar',
+            nullable: true,
+            length: 100,
         },
+        idNasabah:{
+            type: 'varchar',
+            nullable: false,
+            length: 100,
+        }, 
+        lampiran:{
+            type: 'varchar',
+            nullable: true,
+            // length: 100,
+        }, 
+        lampiranJawaban:{
+            type: 'varchar',
+            nullable: true,
+            length: 100,
+        }, 
         createdAt: {
             name: 'created_at',
             type: 'timestamp',
@@ -75,4 +81,4 @@ const userSchema = new EntitySchema({
     // }
 });
 
-module.exports= userSchema
+module.exports= ticketSchema
