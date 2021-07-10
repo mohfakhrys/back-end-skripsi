@@ -1,19 +1,19 @@
 'use strict';
-class Users{
-    constructor(id, userName, firstName, lastName, email, password, createdAt, updateAt, deleteAt, userRoles){
+class Users {
+    constructor(id, userName, fullName, rekening, email, password, userRoles, createdAt, updateAt, deleteAt) {
         this.id = id,
-        this.userName=userName,
-        this.firstName=firstName,
-        this.lastName=lastName,
-        this.email=email,
-        this.password=password,
-        this.createdAt = createdAt,
-        this.updateAt=updateAt,
-        this.deleteAt=deleteAt,
-        this.userRoles=userRoles
+            this.userName = userName,
+            this.fullName = fullName,
+            this.rekening = rekening,
+            this.email = email,
+            this.password = password,
+            this.userRoles = userRoles,
+            this.createdAt = createdAt,
+            this.updateAt = updateAt,
+            this.deleteAt = deleteAt
     }
 }
 
-module.exports={
+module.exports = {
     Users: Users
 }

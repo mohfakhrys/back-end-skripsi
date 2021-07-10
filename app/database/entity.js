@@ -2,11 +2,13 @@
 
 const userSchema = require('./entity/users')
 const roleSchema = require('./entity/roles')
-const nasabahSchema = require('./entity/nasabah')
+// const nasabahSchema = require('./entity/nasabah')
 const ticketSchema = require('./entity/ticket')
 
 module.exports = {
-  nasabahSchema,
+  //nasabahSchema,
+  //kategory,
+  //ticketchange,
   ticketSchema,
   userSchema,
   roleSchema,

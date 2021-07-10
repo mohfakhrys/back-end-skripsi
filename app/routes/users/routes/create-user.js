@@ -10,11 +10,11 @@ const route = {
     notes: 'User Registration API',
     validate: {
       payload: {
-        userName: Joi.string().min(5).max(45).alphanum().required(),
-        firstName: Joi.string().min(5).max(45).alphanum().required(),
-        lastName: Joi.string().min(5).max(45).alphanum().required(),
+        userName: Joi.string().min(5).max(45).required(),
+        fullName: Joi.string().min(5).max(45).required(),
+        rekening: Joi.string().min(5).max(45).required(),
         email: Joi.string().min(5).max(45).email().required(),
-        password: Joi.string().min(5).max(45).alphanum().required(),
+        password: Joi.string().min(5).max(45).required(),
         userRoles: Joi.string().required()
       }
     },

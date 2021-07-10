@@ -59,9 +59,19 @@ async function createTiketByNasabah(nasabahName, complain) {
     }
 }
 
+async function getAlTicket({limit = 10, offset = 0, q,}) {
+    logger.info(TAG+'.getAlTicket begin')
+    limit = limit < 1 ? 1 : limit
+    limit = limit > 100 ? 100 : limit
+}
+
 module.exports=[
     {
         name: 'server.ticke.createTiketByNasabah',
         method: createTiketByNasabah
+    },
+    {
+        name: 'server.ticke.getAlTicket',
+        method: getAlTicket
     }
 ]

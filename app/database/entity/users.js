@@ -1,7 +1,6 @@
 'use strict';
-
-const { EntitySchema } =require ('typeorm');
-const Users = require('../models/users').Users ;
+const { EntitySchema } = require('typeorm');
+const Users = require('../models/users').Users;
 // const Roles = require('../models/roles').Roles
 
 const userSchema = new EntitySchema({
@@ -16,16 +15,17 @@ const userSchema = new EntitySchema({
             nullable: false,
             primary: true,
         },
-        userName:{
+        userName: {
             type: 'varchar',
             length: 100,
             nullable: false,
         },
-        firstName: {
+        fullName: {
             type: 'varchar',
             length: 100,
         },
-        lastName: {
+        rekening: {
+            unique: true,
             type: 'varchar',
             length: 100,
         },
@@ -49,19 +49,19 @@ const userSchema = new EntitySchema({
             type: 'timestamp',
             nullable: false,
             default: () => 'CURRENT_TIMESTAMP',
-          },
+        },
         updateAt: {
             name: 'update_at',
             type: 'timestamp',
             nullable: false,
             default: () => 'CURRENT_TIMESTAMP',
-          },
+        },
         deleteAt: {
             name: 'delete_at',
             type: 'timestamp',
             nullable: false,
             default: () => 'CURRENT_TIMESTAMP',
-          },
+        },
     },
     // relations:{
     //     role: {
@@ -75,4 +75,4 @@ const userSchema = new EntitySchema({
     // }
 });
 
-module.exports= userSchema
+module.exports = userSchema
