@@ -1,17 +1,16 @@
 'use strict';
 class Ticket{
-    constructor(idTicket, complain, sla, statusTicket, kategoryTicket,
-        idNasabah, lampiran, lampiranJawaban, penjelasan,
+    constructor(idTiket, komplain,  status, idKategory,
+        idNasabah, lampiran, tanggalSelesai, jawaban,
         createdAt, updateAt, deleteAt){
-        this.idTicket = idTicket,
-        this.complain=complain,
-        this.sla=sla,
-        this.statusTicket=statusTicket,
-        this.kategoryTicket=kategoryTicket,
+        this.idTiket = idTiket,
+        this.komplain=komplain,
+        this.status=status,
+        this.idKategory=idKategory,
         this.idNasabah=idNasabah,
         this.lampiran=lampiran,
-        this.lampiranJawaban=lampiranJawaban,
-        this.penjelasan=penjelasan,
+        this.tanggalSelesai=tanggalSelesai,
+        this.jawaban=jawaban,
         this.createdAt = createdAt,
         this.updateAt=updateAt,
         this.deleteAt=deleteAt

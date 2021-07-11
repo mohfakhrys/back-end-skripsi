@@ -3,10 +3,11 @@
 const Boom = require('boom');
 const { logger } = require('../../lib/report');
 const Users = require('../../database/models/users').Users
+const Nasabah = require('../../database/models/nasabah').Nasabah
 const { getRepository, QueryBuilder } = require('typeorm');
 const jwt = require('jsonwebtoken');
 const { tlsOptions } = require('../../../config')
-const bcrypt = require('bcrypt')
+const bcrypt = require('bcryptjs')
 
 const TAG = 'server.services.users'
 const saltRounds = 10;
@@ -14,7 +15,6 @@ const saltRounds = 10;
 
 async function getAllUsers() {
     logger.info(TAG, 'getAllUsers begin', )
-    
     let data = await getRepository(Users).findAndCount()
     return data
 }
@@ -34,29 +34,23 @@ async function login(userName, password) {
         throw Boom.badData(existUserName, ' dosnt exist')
     }
     console.log(existUserName.userRoles)
-    // let emailExist = await findByEmail(userName)
-    // if(!emailExist){
-    //     throw Boom.badData(email+ ' dosnt exist')
-    // }
     let passwordExisting = await validPassword(password, existUserName.password)
     if (!passwordExisting) {
-        console.log(existUserName.password);
         throw Boom.unauthorized('password y gak bener',)
     }
     let asu = tlsOptions.private
-
+    console.log(asu)
     let username = existUserName.userName
+    let idUser = existUserName.id
     let role = existUserName.userRoles
     const iat = Math.floor(Date.now() / 1000) - 30
     const exp = Math.floor(Date.now() / 1000) + (60 * 60)
     console.log(iat, exp);
 
-    var toket = jwt.sign({ role, username, iat: iat, exp: exp }, asu, { algorithm: 'HS256' });
+    var toket = jwt.sign({ idUser, role, username, iat: iat, exp: exp }, asu, { algorithm: 'RS512' },'sssssssh');
 
     console.log(toket);
     return { credentials: toket, messaage: '' }
-    //{passwordExisting, existUserName}
-
 }
 
 async function validPassword(password, checkPassword) {
@@ -99,11 +93,20 @@ async function findUserByRekening(rekening) {
     return rekeningExisting
 }
 
+async function getRekening(rekening) {
+    logger.info(TAG, 'beforeCreate begin')
+    const rekeningExisting = await getRepository(Nasabah).findOne({ rekening:rekening })
+    return rekeningExisting
+}
 async function createUser(userName, fullName, rekening, email, password, userRoles) {
     logger.info(TAG, 'findByEmail begin', { userName, fullName, rekening, email, password, userRoles })
     let usernameExist = await findByUsername(userName)
     let emailExist = await findByEmail(email)
     let rekeningExisting = await findUserByRekening(rekening)
+    let rekeingFromNasabah = await getRekening(rekening)
+    if(!rekeingFromNasabah){
+        throw Boom.badRequest('rekening tidak ada')
+    }
     if (usernameExist) {
         throw Boom.badData('userName alredy exist')
     }
@@ -113,6 +116,7 @@ async function createUser(userName, fullName, rekening, email, password, userRol
     if(rekeningExisting){
         throw Boom.badData('rekening alredy exist')
     }
+    
     let passrodEncript = await beforeCreatePassword(password)
     console.log(passrodEncript);
     const data = { userName, fullName, rekening, email, password: passrodEncript, userRoles }

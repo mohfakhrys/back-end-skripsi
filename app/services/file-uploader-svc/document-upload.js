@@ -1,26 +1,32 @@
 const Boom = require('boom')
-const { v4: uuidv4 } = require('uuid');
+const uuidv4 = require('uuid/v4')
 const fs = require('fs')
 const crypto = require('crypto')
 const TAG = "server.service.file-uploader.file-uploader"
-const { logger } = require('../../lib/report');
+const { logger } = require('../../lib/reporter')
 
 function fileHandler(file, options) {
     if (!file) {
         throw new Error('no file')
     }
+    let extention = getFileExtension1(file.hapi.filename)
+
     if (options.fileFilter && !options.fileFilter(file.hapi.filename)) {
         throw Boom.badData('image file type not allowed')
     }
+
     const filename = uuidv4()
-    const path = `${options.dest}${filename}.png`
+    const path = `${options.dest}${filename}.${extention}`
     const fileStream = fs.createWriteStream(path)
     const hash = crypto.createHash("sha512")
+
     let chunks = []
+
     return new Promise((resolve, reject) => {
         file.on('error', function (err) {
             reject(err)
         })
+
         file.on('data', function (d) {
             hash.update(d)
 
@@ -28,7 +34,9 @@ function fileHandler(file, options) {
                 chunks.push(d)
             }
         })
+
         file.pipe(fileStream)
+
         file.on('end', function (err) {
             const fileDetails = {
                 fieldname: file.hapi.name,
@@ -57,6 +65,7 @@ function filesHandler(files, options) {
     if (!files || !Array.isArray(files)) {
         throw new Error('no files')
     }
+
     const promises = files.map(x => fileHandler(x, options))
     return Promise.all(promises)
 }
@@ -64,6 +73,7 @@ function filesHandler(files, options) {
 async function uploader(file, options) {
     logger.info(TAG, "call service uploader")
     if (!file) throw new Error('no file(s)')
+
     return Array.isArray(file) ? filesHandler(file, options) : fileHandler(file, options)
 }
 
@@ -79,13 +89,14 @@ async function removeFile(filePath) {
     })
 }
 
-module.exports = [
-    {
-        name: 'services.files.uploader',
-        method: uploader
-    }, 
-    {
-        name: 'services.files.remove',
-        method: removeFile
-    }
-]
+function getFileExtension1(filename) {
+    return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename)[0] : undefined;
+}
+
+module.exports = [{
+    name: 'services.document.upload',
+    method: uploader
+}, {
+    name: 'services.document.remove',
+    method: removeFile
+}]

@@ -4,6 +4,7 @@ const Boom = require('boom');
 const {logger} =require('../../lib/report');
 const DBpool = require('../../lib/database/postgrest').pool
 const Nasabah = require('../../database/models/nasabah').Nasabah
+const Users = require('../../database/models/users').Users
 const Ticket = require('../../database/models/ticket').Ticket
 const { getRepository } = require('typeorm');
 
@@ -17,9 +18,9 @@ async function saveDataNasabah(nasabahName) {
     return await getRepository(Nasabah).save({id:id, nasabahName:nasabahName,})
 }
 
-async function insertTicket(nasabahId, complane) {
+async function insertTicket(idNasabah, complain, idKategory, path) {
     logger.info(TAG+'.insertTicket begin')
-    const data ={complain:complane, statusTicket:'OPEN', idNasabah:nasabahId,sla:"1 hari"} 
+    const data ={komplain:complain, status:'NEW', idNasabah:idNasabah, lampiran:path, idKategory:idKategory} 
     console.log(data)
     let resultSave =  await getRepository(Ticket).save(data)
     console.log({resultSave})
@@ -33,29 +34,25 @@ async function deleteNasabah(id) {
     return result
 }
 
-async function createTiketByNasabah(nasabahName, complain) {
-    logger.info(TAG+'.createTiketByNasabah begin',{nasabahName, complain})
-    let id = Date.now()
-    console.log(id, nasabahName, complain)
-    let saveNasabah = await saveDataNasabah(nasabahName)
-    console.log('ini data nasbah cuk',saveNasabah)
-    if(!saveNasabah){
-        throw Boom.badRequest('tidak bisa input nasabah')
-    }
-    let idNasabah = saveNasabah.id
-    console.log(idNasabah)
+async function createTiketByNasabah(idNasabah, complain, idKategory, path) {
+    logger.info(TAG+'.createTiketByNasabah begin',{idNasabah, complain, idKategory, path})
+    // let id = Date.now()
+    // console.log(id, nasabahName, complain)
+    // // let saveNasabah = await saveDataNasabah(nasabahName)
+    // console.log('ini data nasbah cuk',saveNasabah)
+    // if(!saveNasabah){
+    //     throw Boom.badRequest('tidak bisa input nasabah')
+    // }
+    // let idNasabah = saveNasabah.id
+    // console.log(idNasabah)
     // console.log(data)
-    let resultSave =  await insertTicket(idNasabah, complain)
+    let resultSave =  await insertTicket(idNasabah, complain, idKategory, path)
     console.log(resultSave)
-    if(!resultSave){
-        console.log('masuk kondisi ini dong ')
-        await deleteNasabah(idNasabah)
-        throw Boom.forbidden('tidak bisa mengirim data')
-    }
     return {
-        namaNasaba:saveNasabah.nasabahName,
+        // namaNasaba:saveNasabah.nasabahName,
         ticketId:resultSave.idTicket,
-        complain:resultSave.complain
+        complain:resultSave.complain,
+
     }
 }
 

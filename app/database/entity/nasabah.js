@@ -17,12 +17,22 @@ const nasabahSchema = new EntitySchema({
     nasabahName: {
       type: 'varchar',
       nullable: false,
-      length: 100,
     },
     nomerHp: {
         type: 'varchar',
         nullable: true,
-        length: 100,
+    },
+    rekening:{
+      type: 'varchar',
+      nullable: true,
+    },
+    alamat:{
+      type: 'varchar',
+      nullable: true,
+    },
+    kodeCabang:{
+      type: 'varchar',
+      nullable: true,
     },
     createdAt: {
       name: 'created_at',

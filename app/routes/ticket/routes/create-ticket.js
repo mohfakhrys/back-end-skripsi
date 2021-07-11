@@ -14,8 +14,9 @@ const route = {
             .meta({ swaggerType: 'file' })
             .required()
             .description('Bukti Complain'),
-        nasabahName:Joi.string().min(5).max(45).alphanum().required(),
-        complain:Joi.string().min(5).alphanum().required(),
+        idNasabah:Joi.string().min(5).alphanum(),
+        complain:Joi.string().min(5).required(),
+        idKategoty:Joi.string().min(5).required(),
       }
     },
     payload: {
