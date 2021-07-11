@@ -14,7 +14,7 @@ const route = {
             .meta({ swaggerType: 'file' })
             .required()
             .description('Bukti Complain'),
-        idNasabah:Joi.string().min(5).alphanum(),
+        idNasabah:Joi.string().min(5).required(),
         complain:Joi.string().min(5).required(),
         idKategoty:Joi.string().min(5).required(),
       }
