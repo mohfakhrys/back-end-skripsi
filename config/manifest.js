@@ -73,6 +73,7 @@ const manifest ={
             { plugin: './services/roles-svc'},
             { plugin: './services/users-svc'},
             { plugin: './services/ticket-svc'},
+            { plugin: './services/file-uploader-svc'},
             {
               plugin: './routes',
               options: {

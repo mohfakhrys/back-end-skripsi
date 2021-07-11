@@ -8,29 +8,24 @@ const ticketSchema = new EntitySchema({
     tableName: 'ticket',
     target: Ticket,
     columns: {
-        idTicket:{
+        idTiket:{
             type: 'int',
             generated: 'serial',
             primary: true,
             unique: true,
             nullable: false,
         },
-        complain:{
+        komplain:{
             type: 'text',
             nullable: false,
             // length: 100,
         }, 
-        sla:{
+        status:{
             type: 'varchar',
-            // nullable: true,
+            nullable: true,
             length: 100,
         }, 
-        statusTicket:{
-            type: 'varchar',
-            // nullable: false,
-            length: 100,
-        }, 
-        kategoryTicket:{
+        idKategory:{
             type: 'varchar',
             nullable: true,
             length: 100,
@@ -45,11 +40,14 @@ const ticketSchema = new EntitySchema({
             nullable: true,
             // length: 100,
         }, 
-        lampiranJawaban:{
+        tanggalSelesai:{
             type: 'varchar',
             nullable: true,
-            length: 100,
-        }, 
+        },
+        jawaban:{
+            type: 'varchar',
+            nullable: true,
+        },
         createdAt: {
             name: 'created_at',
             type: 'timestamp',

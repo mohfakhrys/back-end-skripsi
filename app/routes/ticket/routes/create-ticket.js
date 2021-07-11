@@ -10,9 +10,20 @@ const route = {
     notes: 'ticket create for nasabah',
     validate: {
       payload: {
-        nasabahName:Joi.string().min(5).max(45).alphanum().required(),
-        complain:Joi.string().min(5).alphanum().required(),
+        image: Joi.any()
+            .meta({ swaggerType: 'file' })
+            .required()
+            .description('Bukti Complain'),
+        idNasabah:Joi.string().min(5).alphanum(),
+        complain:Joi.string().min(5).required(),
+        idKategoty:Joi.string().min(5).required(),
       }
+    },
+    payload: {
+      maxBytes: 4194304,
+      parse: true,
+      allow: 'multipart/form-data',
+      output: 'stream'
     },
     // validate:{},
     // validate: {
@@ -23,7 +34,7 @@ const route = {
     // },
     plugins: {
       'hapi-swagger': {
-        // payloadType: 'form',
+        payloadType: 'form',
         responses: {
           '200': {
             description: 'Success'
