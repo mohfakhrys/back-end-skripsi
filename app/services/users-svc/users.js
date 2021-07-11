@@ -36,18 +36,19 @@ async function login(userName, password) {
     console.log(existUserName.userRoles)
     let passwordExisting = await validPassword(password, existUserName.password)
     if (!passwordExisting) {
-        throw Boom.unauthorized('password y gak bener',)
+        throw Boom.unauthorized('password gak bener',)
     }
-    let asu = tlsOptions.private
-    console.log(asu)
-    let username = existUserName.userName
-    let idUser = existUserName.id
-    let role = existUserName.userRoles
+    let privateKey = tlsOptions.private
+    console.log(privateKey)
+    
     const iat = Math.floor(Date.now() / 1000) - 30
     const exp = Math.floor(Date.now() / 1000) + (60 * 60)
     console.log(iat, exp);
 
-    var toket = jwt.sign({ idUser, role, username, iat: iat, exp: exp }, asu, { algorithm: 'RS512' },'sssssssh');
+    var toket = jwt.sign({ username:existUserName.userName, role:existUserName.userRoles,
+        id:existUserName.id, email:existUserName.email, 
+        full_name:existUserName.fullName, iat: iat, exp: exp }, 
+        privateKey, { algorithm: 'RS512' },'sssssssh');
 
     console.log(toket);
     return { credentials: toket, messaage: '' }
