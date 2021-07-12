@@ -15,7 +15,8 @@ const saltRounds = 10;
 
 async function getAllUsers() {
     logger.info(TAG, 'getAllUsers begin', )
-    let data = await getRepository(Users).findAndCount()
+    let data = await getRepository(Users).find({take:0, skip:0})
+    console.log({data})
     return data
 }
 

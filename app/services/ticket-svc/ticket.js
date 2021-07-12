@@ -1,6 +1,7 @@
 'use strict';
 
 const Boom = require('boom');
+const fs = require('fs')
 const {logger} =require('../../lib/report');
 const DBpool = require('../../lib/database/postgrest').pool
 const Nasabah = require('../../database/models/nasabah').Nasabah
@@ -33,7 +34,20 @@ async function deleteNasabah(id) {
     const result = await getRepository(Nasabah).delete({id:id})
     return result
 }
-
+async function getImageThumbnailByIdTicket(id) {
+    logger.info(TAG+'.getImageThumbnail begin')
+    let idTicket = await getRepository(Ticket).findByIds(id)
+    console.log({idTicket})
+    if(!idTicket[0]){
+        logger.warn(TAG+"id tidak ada")
+        throw Boom.badData('id tidak di temukan')
+    }
+    if(!fs.existsSync(idTicket[0]?.lampiran)){
+        throw Boom.notFound('Image file not found')
+    }
+    console.log(idTicket[0]?.lampiran)
+    return idTicket[0]?.lampiran
+}
 async function createTiketByNasabah(idNasabah, complain, idKategory, path) {
     logger.info(TAG+'.createTiketByNasabah begin',{idNasabah, complain, idKategory, path})
     // let id = Date.now()
@@ -48,12 +62,7 @@ async function createTiketByNasabah(idNasabah, complain, idKategory, path) {
     // console.log(data)
     let resultSave =  await insertTicket(idNasabah, complain, idKategory, path)
     console.log(resultSave)
-    return {
-        // namaNasaba:saveNasabah.nasabahName,
-        ticketId:resultSave.idTicket,
-        complain:resultSave.complain,
-
-    }
+    return resultSave
 }
 
 async function getAlTicket({limit = 10, offset = 0, q,}) {
@@ -70,5 +79,9 @@ module.exports=[
     {
         name: 'server.ticke.getAlTicket',
         method: getAlTicket
+    },
+    {
+        name:'server.ticket.thumbnail',
+        method:getImageThumbnailByIdTicket,
     }
 ]
