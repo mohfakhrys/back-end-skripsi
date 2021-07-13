@@ -4,6 +4,7 @@ const Boom = require('boom');
 const { logger } = require('../../lib/report');
 const Users = require('../../database/models/users').Users
 const Nasabah = require('../../database/models/nasabah').Nasabah
+const Roles = require('../../database/models/roles').Roles
 const { getRepository, QueryBuilder } = require('typeorm');
 const jwt = require('jsonwebtoken');
 const { tlsOptions } = require('../../../config')
@@ -96,9 +97,14 @@ async function findUserByRekening(rekening) {
 }
 
 async function getRekening(rekening) {
-    logger.info(TAG, 'beforeCreate begin')
+    logger.info(TAG+'.getRekening beforeCreate begin')
     const rekeningExisting = await getRepository(Nasabah).findOne({ rekening:rekening })
     return rekeningExisting
+}
+async function findByNameRole(id) {
+    logger.info(TAG+'.findByNameRole begin')
+    const dataRole = await getRepository(Roles).find({id:id})
+    return dataRole
 }
 async function createUser(userName, fullName, rekening, email, password, userRoles) {
     logger.info(TAG, 'findByEmail begin', { userName, fullName, rekening, email, password, userRoles })
@@ -106,8 +112,11 @@ async function createUser(userName, fullName, rekening, email, password, userRol
     let emailExist = await findByEmail(email)
     let rekeningExisting = await findUserByRekening(rekening)
     let rekeingFromNasabah = await getRekening(rekening)
-    if(!rekeingFromNasabah){
-        throw Boom.badRequest('rekening tidak ada')
+    
+    if(userRoles ==='nasabah'){
+        if(!rekeingFromNasabah){
+            throw Boom.badRequest('rekening tidak ada')
+        }
     }
     if (usernameExist) {
         throw Boom.badData('userName alredy exist')
@@ -125,21 +134,6 @@ async function createUser(userName, fullName, rekening, email, password, userRol
     return await getRepository(Users).save(data)
 }
 
-// async function getAllUsers({ limit, offset, userName, firstName, lastName, email }) {
-//     logger.info(TAG, 'getAllUsers Begin')
-//     logger.info(TAG, { limit, offset, userName, firstName, lastName, email })
-//     console.log({ limit, offset, userName, firstName, lastName, email });
-
-//     limit = limit < 1 ? 1 : limit
-//     limit = limit > 100 ? 100 : limit
-
-//     const data = await postgresPool.query(
-//         `SELECT id, username from users`
-//     )
-
-//     console.log(data);
-//     return data.rows
-// }
 
 module.exports = [
     {
