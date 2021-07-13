@@ -37,7 +37,8 @@ const config ={
         public: Fs.readFileSync(Path.join(__dirname, 'ssl/certificate.crt'), 'utf8'),
         private: Fs.readFileSync(Path.join(__dirname, 'ssl/privateKey.key'), 'utf8')
     },
-	uploadDestination:process.env.UPLOAD_DEST
+	uploadDestination:process.env.UPLOAD_DEST,
+	contentSecurityPolicyValue: process.env.CONTENT_SECURITY_POLICY_VALUE || "script-src 'self'",
 }
 
 module.exports = config

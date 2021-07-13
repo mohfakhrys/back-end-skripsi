@@ -1,13 +1,13 @@
 const Joi = require('joi')
-const handler = require('../handler/get-thumnail-ticket')
+const handler = require('../handler/get-ticket-byid')
 
 const route = {
     method: 'GET',
-    path: '/ticket/image/{id}/thumbnail',
+    path: '/ticket/{id}',
     options: {
-        tags: ['api', 'get image'],
-        description: 'Lampiran image',
-        notes: 'Lampiran image Thumbnail',
+        tags: ['api', 'Ticket ById'],
+        description: 'Ticket ById',
+        notes: 'Ticket ById',
         validate: {
             params: {
                 id: Joi.string().min(1).max(4000).required()

@@ -40,13 +40,23 @@ async function getImageThumbnailByIdTicket(id) {
     console.log({idTicket})
     if(!idTicket[0]){
         logger.warn(TAG+"id tidak ada")
-        throw Boom.badData('id tidak di temukan')
+        throw Boom.badData('tiket tidak di temukan')
     }
     if(!fs.existsSync(idTicket[0]?.lampiran)){
         throw Boom.notFound('Image file not found')
     }
     console.log(idTicket[0]?.lampiran)
     return idTicket[0]?.lampiran
+}
+
+async function getTicketById(id) {
+    logger.info(TAG+'.getTicketById begin')
+    let idTicket = await getRepository(Ticket).findByIds(id)
+    console.log(idTicket[0]?.idTiket)
+    if(!idTicket[0]?.idTiket){
+        throw Boom.badData('tiket tidak di temukan')
+    }
+    return idTicket
 }
 async function createTiketByNasabah(idNasabah, complain, idKategory, path) {
     logger.info(TAG+'.createTiketByNasabah begin',{idNasabah, complain, idKategory, path})
@@ -83,5 +93,9 @@ module.exports=[
     {
         name:'server.ticket.thumbnail',
         method:getImageThumbnailByIdTicket,
+    },
+    {
+        name:'server.ticket.getTicketById',
+        method:getTicketById
     }
 ]

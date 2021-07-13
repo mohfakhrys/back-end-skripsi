@@ -11,7 +11,7 @@ const route = {
     validate: {
         payload: {
           id: Joi.number().max(45).required(),
-          role_name: Joi.string().min(5).max(45).alphanum().required(),
+          role_name: Joi.string().min(5).max(45).required(),
         }
       },
     // validate:{},

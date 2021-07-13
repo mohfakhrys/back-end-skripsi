@@ -30,9 +30,9 @@ api.plugin = {
         const data = response.data && response.data.data ? response.data.data : undefined
         const err = withBasicError(code, msg, data)
         // Fix for F5
-        if (response.output.statusCode === 500 || response.output.statusCode === 503 || response.output.statusCode === 504) {
-          statusCode = 400
-        }
+        // if (response.output.statusCode === 500 || response.output.statusCode === 503 || response.output.statusCode === 504) {
+        //   statusCode = 400
+        // }
 
         return h.response(err).code(statusCode)
       }
@@ -45,18 +45,26 @@ api.plugin = {
         response.header("Strict-Transport-Security", "max-age=16070400; includeSubDomains");
         response.header("Referrer-Policy", "no-referrer");
         response.header("Feature-Policy", "vibrate 'none'; geolocation 'none'");
-        h.state('TS015c3a15')
+        h.state('fahriGantengBanget')
       }
 
       return h.continue
     }
 
     await server.register(require('hapi-auth-jwt2'))
+
     server.auth.strategy('jwt-asu', 'jwt', {
       key: config.tlsOptions,
-      validate: validation,
+      validate: function (decode, request) {
+        try {
+
+        } catch (error) {
+
+        }
+      },
+      // validate: validation,
       verifyOptions: {
-        algorithms: ['ES256']
+        algorithms: ['RS512']
       }
     })
 
