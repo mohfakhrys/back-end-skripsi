@@ -1,50 +1,50 @@
 'use strict';
 
-const { EntitySchema, PrimaryGeneratedColumn } = require ('typeorm');
-const Ticket = require('../models/ticket').Ticket ;
+const { EntitySchema, PrimaryGeneratedColumn } = require('typeorm');
+const Ticket = require('../models/ticket').Ticket;
 
 const ticketSchema = new EntitySchema({
     name: 'ticket',
     tableName: 'ticket',
     target: Ticket,
     columns: {
-        idTiket:{
+        idTiket: {
             type: 'int',
             generated: 'serial',
             primary: true,
             unique: true,
             nullable: false,
         },
-        komplain:{
+        komplain: {
             type: 'text',
             nullable: false,
             // length: 100,
-        }, 
-        status:{
-            type: 'varchar',
-            nullable: true,
-            length: 100,
-        }, 
-        idKategory:{
+        },
+        status: {
             type: 'varchar',
             nullable: true,
             length: 100,
         },
-        idNasabah:{
+        idKategory: {
+            type: 'varchar',
+            nullable: true,
+            length: 100,
+        },
+        idNasabah: {
             type: 'varchar',
             nullable: false,
             length: 100,
-        }, 
-        lampiran:{
+        },
+        lampiran: {
             type: 'varchar',
             nullable: true,
             // length: 100,
-        }, 
-        tanggalSelesai:{
+        },
+        tanggalSelesai: {
             type: 'varchar',
             nullable: true,
         },
-        jawaban:{
+        jawaban: {
             type: 'varchar',
             nullable: true,
         },
@@ -53,19 +53,19 @@ const ticketSchema = new EntitySchema({
             type: 'timestamp',
             nullable: false,
             default: () => 'CURRENT_TIMESTAMP',
-          },
+        },
         updateAt: {
             name: 'update_at',
             type: 'timestamp',
             nullable: false,
             default: () => 'CURRENT_TIMESTAMP',
-          },
+        },
         deleteAt: {
             name: 'delete_at',
             type: 'timestamp',
             nullable: false,
             default: () => 'CURRENT_TIMESTAMP',
-          },
+        },
     },
     // relations:{
     //     role: {
@@ -79,4 +79,4 @@ const ticketSchema = new EntitySchema({
     // }
 });
 
-module.exports= ticketSchema
+module.exports = ticketSchema

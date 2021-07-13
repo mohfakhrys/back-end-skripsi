@@ -5,12 +5,12 @@ const roleSchema = require('./entity/roles')
 const nasabahSchema = require('./entity/nasabah')
 const categorySchema = require('./entity/category')
 const ticketSchema = require('./entity/ticket')
+const ticketChangeSchema = require('./entity/ticket-change');
 
 module.exports = {
   nasabahSchema,
   categorySchema,
-  //kategory,
-  //ticketchange,
+  ticketChangeSchema,
   ticketSchema,
   userSchema,
   roleSchema,
