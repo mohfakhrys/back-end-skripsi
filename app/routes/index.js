@@ -75,7 +75,8 @@ api.plugin = {
       server.register(require('./about-us')),
       server.register(require('./roles')),
       server.register(require('./users')),
-      server.register(require('./ticket'))
+      server.register(require('./ticket')),
+      server.register(require('./ticket-change')),
     ]
 
     server.ext('onPreResponse', preResponse)

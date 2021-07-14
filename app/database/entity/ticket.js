@@ -31,9 +31,8 @@ const ticketSchema = new EntitySchema({
             length: 100,
         },
         idNasabah: {
-            type: 'varchar',
+            type: 'uuid',
             nullable: false,
-            length: 100,
         },
         lampiran: {
             type: 'varchar',

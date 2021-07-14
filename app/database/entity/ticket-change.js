@@ -22,8 +22,9 @@ const ticketChangeSchema = new EntitySchema({
     keterangan: {
       type: 'varchar',
       nullable: true,
-    }, idUsers: {
-      type: 'varchar',
+    },
+    idUsers: {
+      type: 'uuid',
       nullable: true,
     },
     idTiket: {

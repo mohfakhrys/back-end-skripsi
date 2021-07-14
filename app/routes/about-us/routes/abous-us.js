@@ -9,10 +9,10 @@ const route = {
     description: 'Help Category',
     notes: 'Help Category',
     validate: {
-      headers: Joi.object({
-        Authorization: Joi.string().min(1).max(4000),
-        'Content-Language': Joi.string().valid(['id-ID', 'en-US']).default('id-ID').optional()
-      }).unknown()
+      // headers: Joi.object({
+      //   Authorization: Joi.string().min(1).max(4000),
+      //   'Content-Language': Joi.string().valid(['id-ID', 'en-US']).default('id-ID').optional()
+      // }).unknown()
     },
     plugins: {
       'hapi-swagger': {
@@ -27,7 +27,7 @@ const route = {
     /**
      * auth for asuuuuuuuuu
      */
-    auth: 'jwt-asu'
+    // auth: 'jwt-asu'
     //'mobile-jwt'
   },
   handler

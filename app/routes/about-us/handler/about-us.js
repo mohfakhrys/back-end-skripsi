@@ -1,8 +1,8 @@
 const aboutUsContent = require('./content')
 
 async function handler() {
-  return await aboutUsContent.content()
-    
+  const data = await aboutUsContent.content()
+    return data
   }
   
   module.exports = handler

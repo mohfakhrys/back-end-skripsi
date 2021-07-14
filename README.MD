@@ -28,7 +28,7 @@ DB_SYNC=true
 DISABLE_LOG=1
 FILE_SIZE_LIMIT=10
 FILE_UPLOAD_COUNT=10
-FILE_UPLOAD_PATH=upload/users
+UPLOAD_DEST='./upload/image'
 ```
 
 
